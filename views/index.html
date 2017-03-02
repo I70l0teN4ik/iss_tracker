@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>ISS Location</title>
+
+        <script type="text/javascript">
+            (function() {
+                var i = 0;
+                var updateFunction = function updatePosition() {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('GET', '/ajax', true);
+                    xhr.send();
+
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState != 4) {
+                            return;
+                        }
+
+                        if (xhr.status == 200) {
+                            document.getElementById('pos').innerHTML = xhr.responseText
+                                + ' <span style="font-weight:normal;color:darkgreen;">updated ' + ++i +'</span>';
+                        }
+                    };
+                };
+
+                setInterval(updateFunction, 5000);
+
+            })();
+        </script>
+    </head>
+    <body>
+        <div style="text-align:center;margin-top: 50vh">
+            Currently ISS is over <span id="pos" style="font-weight:bold">{{ position }}</span>
+        </div>
+    </body>
+</html>
